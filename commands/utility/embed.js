@@ -1,3 +1,4 @@
+/*
 const { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, SlashCommandBuilder, EmbedBuilder, Events } = require('discord.js');
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 const { Client, GatewayIntentBits } = require('discord.js');
@@ -60,3 +61,5 @@ client.on(Events.InteractionCreate, interaction => {
 		.setTimestamp();
 	interaction.channel.send({ embeds: [newEmbed] });
 });
+
+*/
