@@ -1,14 +1,33 @@
 // Require the necessary discord.js classes
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Collection, GatewayIntentBits } = require('discord.js');
-const { token } = require('./config.json');
+const { Client, Collection, GatewayIntentBits, Partials } = require('discord.js');
 
 // Create a new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({
+	partials: [
+		Partials.Message,
+		Partials.Channel,
+		Partials.GuildMember,
+		Partials.Reaction,
+	],
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildInvites,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.GuildMessageReactions,
+		GatewayIntentBits.MessageContent,
+	],
+});
 
+const config = require('./config.json');
+client.config = config;
+
+/* cooldown section */
 client.cooldowns = new Collection();
 client.commands = new Collection();
+
+/* Reading & Executing Commands Folder's Js Files */
 const foldersPath = path.join(__dirname, 'commands');
 const commandFolders = fs.readdirSync(foldersPath);
 
@@ -28,6 +47,7 @@ for (const folder of commandFolders) {
 	}
 }
 
+/* Reading & Executing Events Folder's Js files */
 const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
@@ -43,4 +63,4 @@ for (const file of eventFiles) {
 }
 
 // Log in to Discord with your client's token
-client.login(token);
+client.login(config.token);

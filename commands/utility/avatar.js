@@ -7,7 +7,7 @@ module.exports = {
 		.setDescription('Show User\'s Profile Picture'),
 	async execute(interaction) {
 		const avatarEmbed = new EmbedBuilder()
-			.setColor(0xFFA5A5)
+			.setColor(0x7F81B2)
 			.setDescription(`${interaction.user.username}'s avatar`)
 			.setImage(`${interaction.user.displayAvatarURL()}?size=512&quality=lossless`)
 			.setTimestamp();
