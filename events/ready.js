@@ -3,7 +3,7 @@ const { Events, ActivityType } = require('discord.js');
 module.exports = {
 	name: Events.ClientReady,
 	once: true,
-	execute(client) {
+	async execute(client, interaction) {
 		console.log(`Ready! Logged in as ${client.user.tag}`);
 
 		client.user.setPresence({
@@ -15,12 +15,28 @@ module.exports = {
 			}],
 		});
 
-		/* client.user.setActivity({
-			name: 'Kissing Boy Simulator',
-			type: ActivityType.Playing,
-			url: 'https://the1der4.github.io/',
-		});
-		client.user.setStatus('idle',);
-		*/
+		/* 8am Alarm */
+		function outputWordAt8AM() {
+			const now = new Date();
+			const targetTime = new Date(now);
+
+			targetTime.setHours(8, 0, 0, 0);
+			// Set to 8:00:00 AM
+
+			// If it's already past 8 AM, set for the next day
+			if (now > targetTime) {
+				targetTime.setDate(targetTime.getDate() + 1);
+			}
+
+			const timeUntil8AM = targetTime - now;
+
+			setTimeout(() => {
+				interaction.reply('每日關心');
+				// Schedule the next day's output
+				outputWordAt8AM();
+			}, timeUntil8AM);
+		}
+		// Start the process
+		outputWordAt8AM();
 	},
 };
